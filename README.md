@@ -21,7 +21,7 @@ Agora eu vou escrever um código em HTML para testar:
     </body>
    </html>
    ```
-## Utilidades do arquivo
+## Utilidades do arquivo README.md
 
 * Descrição do seu projeto
 * Funcionalidades
