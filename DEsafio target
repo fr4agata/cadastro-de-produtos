@@ -1,0 +1,82 @@
+import json
+
+def calcular_soma_indice():
+    INDICE = 13
+    SOMA = 0
+    K = 0
+    while K < INDICE:
+        K += 1
+        SOMA += K
+    return SOMA
+
+def is_fibonacci(n):
+    a, b = 0, 1
+    while b <= n:
+        if b == n:
+            return True
+        a, b = b, a + b
+    return False
+
+def processar_faturamento(faturamento_json):
+    faturamento_data = json.loads(faturamento_json)["faturamento"]
+    faturamento_valido = [valor for valor in faturamento_data if valor > 0]
+    
+    menor_faturamento = min(faturamento_valido)
+    maior_faturamento = max(faturamento_valido)
+    media_mensal = sum(faturamento_valido) / len(faturamento_valido)
+    dias_acima_da_media = len([valor for valor in faturamento_valido if valor > media_mensal])
+    
+    return menor_faturamento, maior_faturamento, dias_acima_da_media
+
+def calcular_percentuais_faturamento(faturamento):
+    total_faturamento = sum(faturamento.values())
+    percentuais = {estado: (valor / total_faturamento) * 100 for estado, valor in faturamento.items()}
+    return percentuais
+
+def inverter_string(s):
+    invertida = ""
+    for i in range(len(s)-1, -1, -1):
+        invertida += s[i]
+    return invertida
+
+# 1) Cálculo do valor final da variável SOMA
+soma_resultado = calcular_soma_indice()
+print(f"Valor final de SOMA: {soma_resultado}")
+
+# 2) Verificação de número na sequência de Fibonacci
+numero = 21  # Substitua este valor pelo número que deseja verificar
+if is_fibonacci(numero):
+    print(f"O número {numero} pertence à sequência de Fibonacci.")
+else:
+    print(f"O número {numero} NÃO pertence à sequência de Fibonacci.")
+
+# 3) Processamento do faturamento diário
+faturamento_json = '''
+{
+    "faturamento": [100, 200, 0, 400, 500, 0, 700, 800, 0, 0, 1000, 1100, 0, 1300, 0, 1500]
+}
+'''
+
+menor, maior, dias_acima = processar_faturamento(faturamento_json)
+print(f"Menor faturamento: R${menor}")
+print(f"Maior faturamento: R${maior}")
+print(f"Dias com faturamento acima da média: {dias_acima} dias")
+
+# 4) Cálculo dos percentuais de faturamento por estado
+faturamento_estados = {
+    "SP": 67836.43,
+    "RJ": 36678.66,
+    "MG": 29229.88,
+    "ES": 27165.48,
+    "Outros": 19849.53
+}
+
+percentuais = calcular_percentuais_faturamento(faturamento_estados)
+for estado, percentual in percentuais.items():
+    print(f"{estado}: {percentual:.2f}%")
+
+# 5) Inversão de uma string
+texto = "Exemplo de string"
+texto_invertido = inverter_string(texto)
+print(f"String original: {texto}")
+print(f"String invertida: {texto_invertido}")
